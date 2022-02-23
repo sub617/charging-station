@@ -3,31 +3,35 @@
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.example.internship2.api.ApiUtilities
 import com.example.internship2.api.MyCoordinatesModel
-
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.example.internship2.databinding.ActivityMapsBinding
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.Marker
-import okhttp3.Call
-import retrofit2.Callback
-import okhttp3.Response
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.navigation.NavigationView
 import okhttp3.ResponseBody
-import java.io.IOException
+import retrofit2.Callback
 
- class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+ class MainActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+
+     private lateinit var toolbar: Toolbar
+
+     private lateinit var drawerLayout: DrawerLayout
+     private lateinit var navigationView: NavigationView
 
     private lateinit var mMap: GoogleMap
     private lateinit var lastlocal: Location
@@ -43,7 +47,23 @@ import java.io.IOException
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_maps)
+        setContentView(R.layout.activity_main)
+
+        toolbar = findViewById(R.id.toolbarMember)
+        setSupportActionBar(toolbar)
+
+        drawerLayout = findViewById(R.id.drawer_layout_main)
+        navigationView = findViewById(R.id.nav_view_main)
+
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar ,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
 
 
         val mapFragment = supportFragmentManager
@@ -94,15 +114,18 @@ import java.io.IOException
      }
 
      private fun placeMarkerOnmap(currentLatLng: LatLng) {
-val markerOptions = MarkerOptions().position(currentLatLng)
+
+        val markerOptions = MarkerOptions().position(currentLatLng)
          markerOptions.title("$currentLatLng")
          mMap.addMarker(markerOptions)
      }
 
-     override fun onMarkerClick(p0: Marker?)=false
+     override fun onMarkerClick(p0: Marker): Boolean =false
 
      private fun createUser(){
-         myCoordinatesModel = MyCoordinatesModel(latitude,longitude)
+
+         myCoordinatesModel.lat = latitude
+         myCoordinatesModel.lon = longitude
          Log.d("COORDINATES" , "The lat is "+latitude+"  and the longitude is "+longitude)
 
          ApiUtilities.apiInterface
