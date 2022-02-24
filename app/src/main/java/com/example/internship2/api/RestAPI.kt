@@ -11,6 +11,6 @@ interface RestAPI {
     fun createUser(@Body myCoordinatesModel: MyCoordinatesModel?): Call<ResponseBody>
 
     companion object {
-        const val baseurl = "http:192.168.151.103//:8000/"
+        const val baseurl = "http://192.168.151.103:8000"
     }
 }

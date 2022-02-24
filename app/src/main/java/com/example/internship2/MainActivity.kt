@@ -63,6 +63,7 @@ import retrofit2.Callback
             R.string.navigation_drawer_close
         )
         drawerLayout.addDrawerListener(toggle)
+        toggle.drawerArrowDrawable.color = resources.getColor(R.color.white);
         toggle.syncState()
 
 
@@ -72,7 +73,6 @@ import retrofit2.Callback
 
         fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(this)
     }
-
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
@@ -124,6 +124,8 @@ import retrofit2.Callback
 
      private fun createUser(){
 
+         myCoordinatesModel = MyCoordinatesModel()
+
          myCoordinatesModel.lat = latitude
          myCoordinatesModel.lon = longitude
          Log.d("COORDINATES" , "The lat is "+latitude+"  and the longitude is "+longitude)
@@ -158,19 +160,3 @@ import retrofit2.Callback
 
      }
  }
- /*if (response.isSuccessful) {
-                     Toast.makeText(applicationContext , "Success" , Toast.LENGTH_LONG).show()
-                     Log.d("STATUS" , "Success")
-
-                 }
-                 else {
-                     Toast.makeText(applicationContext , "Unsuccessful - Failed" , Toast.LENGTH_LONG).show()
-                     Log.d("STATUS" , "Unsuccessful - Failed")
-                 }
-
-             }
-
-             override fun onFailure(call: Call, e: IOException) {
-                 Toast.makeText(applicationContext , "Failed" , Toast.LENGTH_LONG).show()
-                 Log.d("STATUS" , "Failed")
-             }*/
