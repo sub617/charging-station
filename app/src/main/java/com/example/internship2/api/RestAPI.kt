@@ -7,10 +7,10 @@ import retrofit2.Call
 
 interface RestAPI {
 
-    @POST("gps/create")
+    @POST("/gps/create")
     fun createUser(@Body myCoordinatesModel: MyCoordinatesModel?): Call<ResponseBody>
 
     companion object {
-        const val baseurl = "http://192.168.151.103:8000"
+        const val baseurl = "http://192.168.163.103:8000"
     }
 }

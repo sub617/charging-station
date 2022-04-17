@@ -149,8 +149,8 @@ import retrofit2.Callback
                  }
 
                  override fun onFailure(call: retrofit2.Call<ResponseBody>, t: Throwable) {
-                     Log.d("hrrgrgrgrgr" , "Failed"+"  "+t.message)
-                     Toast.makeText(applicationContext , "Failed" , Toast.LENGTH_LONG).show()
+                     Log.d("charge" , "Failure"+"  "+t.message)
+                     Toast.makeText(applicationContext , "Failure" , Toast.LENGTH_LONG).show()
 
                  }
 
